@@ -11,12 +11,14 @@ import { auth } from "@/lib/firebaseConfig";
 import {
   onAuthStateChanged,
   signOut,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword,User
 } from "firebase/auth";
+
+
 import Cookies from "js-cookie";
 
 interface AuthContextType {
-  user: any;
+  user: User|null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -24,7 +26,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User|null>(null);
 
   // Monitor auth state
   useEffect(() => {
